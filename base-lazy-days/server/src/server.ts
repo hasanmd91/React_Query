@@ -31,12 +31,12 @@ declare global {
 const app = express();
 
 // CORS for react app, assuming port 3000
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-  }),
-);
+app.use(cors({ origin: 'http://localhost:3003' }));
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  next();
+});
 
 /* ********* middlewares ********* */
 // use middleware to serve static images
@@ -86,7 +86,7 @@ export const startUp = async () => {
   await createAppointments();
 
   // eslint-disable-next-line no-console
-  app.listen(3030, () => console.log('Spa server listening on port 3030!'));
+  app.listen(3003, () => console.log('Spa server listening on port 3030!'));
 };
 
 export default app;
